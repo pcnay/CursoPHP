@@ -6,6 +6,7 @@
   404 = Archivos no encontrado
   500 = Error del servidor
   */
+  // Otra linea que se agrega.
 
   // Que ha conectado con el servidor PHP, encontro el archivo.
 var READY_STATE_COMPLETE = 4;
