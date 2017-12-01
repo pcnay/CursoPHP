@@ -23,6 +23,7 @@ var respuesta = document.querySelector("#respuesta");
 // Se puede utilizar. document.getElementByClassName... (para los identificadores clases de las etiquetas.) 
 var btnsEliminar = document.querySelectorAll(".eliminar");
 
+var btnsEditar = document.querySelectorAll(".editar");
 // Funciones
 function objetoAJAX()
 {
@@ -163,6 +164,23 @@ function eliminarHeroe(evento)
 
 }
 
+function editarHeroe(evento)
+{
+  // previene el funcionamiento por defecto, ya que tiene "#" y no lo despliege en la URL.
+  evento.preventDefault();
+  // alert(evento.target.dataset.id);
+  
+  // Se esta tomando el valor del atributo escrito "data-id"
+  // En javaScript el dataset = data, del atributo anterior.
+  var idHeroe = evento.target.dataset.id
+  // Creando los datos que se le pasaran al Ajax.
+  // $transaccion, le indica al controlador que va a realizar
+  var datos = "idHeroe="+idHeroe+"&transaccion=editar";
+
+  ejecutarAJAX(datos);
+
+}
+
 function alCargarDocumento()
 {
   btnInsertar.addEventListener("click",altaHeroe);
@@ -171,6 +189,13 @@ function alCargarDocumento()
   {
     btnsEliminar[i].addEventListener("click",eliminarHeroe);
   }
+
+  // Para editar un registro.
+  for (var i=0; i<btnsEditar.length; i++)
+  {
+    btnsEditar[i].addEventListener("click",editarHeroe);
+  }
+  
 }
 
 // Eventos

@@ -48,6 +48,7 @@
     else if ($transaccion == "editar")
     {
       // Traer los datros del reg.a modificar en un formulario
+      editarHeroe($_POST["idHeroe"]);
     }
     else if ($transaccion = "actualizar")
     {

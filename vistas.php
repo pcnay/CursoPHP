@@ -54,13 +54,105 @@ function altaHeroe()
         $form .= listaEditoriales();
       $form .= "</div>";  
       $form .= "<div>";
-        $form .= "<input type='submit' id='insertar-btn' name = 'insertar_btn' value= 'Insertar' />";  
+        
         // El usuario no ve en la interfaz formulario.
         // Este se envia al controlador, para ejecutar la instruccion .
-        $form .= "<input type='hidden' id='transaccion' name = 'transaccion' value= 'insertar' />";          
+        $form .= "<input type='submit' id='insertar-btn' name = 'insertar_btn' value= 'Insertar' />";  
+        $form .= "<input type='hidden' id='transaccion' name = 'transaccion' value= 'insertar' />";                  
       $form .= "</div>";  
     $form .= "</fieldset>";
   $form .= "</form>";
+
+  // Separando el código de PHP y HTML, con formato utilizando "printf"  
+  return printf($form);
+}
+
+function listaEditorialesEditada($id)
+{
+  //Esta funcion devuelve el nombre de la editorial del super heroe.
+  $mysql = conexionMySQL();
+  $sql = "SELECT * FROM editorial";
+
+  $resultado = $mysql->query($sql);
+  // Para introducirlo en un Select de HTML.
+  $lista = "<select id = 'editorial' name = 'editorial_slc' required>";
+  // Obtiene los  registros por nombre de campo.
+    $lista .= "<option value =''>- - -</option>";
+  while($fila = $resultado->fetch_assoc())
+  {
+    // Concatena la variable "$lista"
+    // $lista .= "<option value ='".$fila["id_editorial"]."'>".$fila["editorial"]."</option>";
+  
+    // Otra forma de realizarlo, se utiliza con "sprintf" para que lo convierta a cadena
+    // y poderla concatenar.
+    $selected = ($id == $fila["id_editorial"])?"selected":"";
+
+    $lista .= sprintf("<option value = '%d' $selected >%s</option>",$fila["id_editorial"],$fila["editorial"]);
+  }
+
+  $lista .= "</select>";
+
+  $resultado->free();
+  $mysql->close();
+
+  return $lista;
+}
+
+function editarHeroe($idHeroe)
+{
+  $mysql = conexionMYSQL();
+  $sql = "SELECT * FROM heroes WHERE id_heroe = $idHeroe";
+  if ($resultado=$mysql->query($sql))
+  {
+    // Muestro form con los datos del registro.
+    // Editando los datos del registro.
+
+    // fetch_assoc() = Permite traer de un registro con su nombre de campo
+    // $fila es un arreglo con el contenido de los nombres de los campos del registro 
+    $fila = $resultado->fetch_assoc();
+
+    $form = "<form id = 'editar-heroe' class = 'formulario' data-editar>";
+      $form .= "<fieldset>";
+        $form .= "<legend>Edicion De Super Héroes : </legend>";
+        $form .= "<div>";
+          $form .= "<label for = 'nombre'>Nombre:</label>";
+          // name = es para el backend es como lo renoce, en javascript es id para desencadenar prog.
+          $form .= "<input type='text' id = 'nombre' name = 'nombre_txt' value = '".$fila["nombre"]."' required />";
+        $form .= "</div>";  
+        $form .= "<div>";
+          $form .= "<label for = 'imagen'>Imagen:</label>";
+          $form .= "<input type='text' id = 'imagen' name = 'imagen_txt' value = '".$fila["imagen"]."'required />";
+        $form .= "</div>";  
+        $form .= "<div>";
+          $form .= "<label for = 'descripcion'>Descripcion:</label>";
+          $form .= "<textarea id = 'descripcion' name = 'descripcion_txa' required >".$fila["descripcion"]."</textarea>";
+        $form .= "</div>";  
+        $form .= "<div>";
+          $form .= "<label for = 'editorial'>Editorial:</label>";
+          $form .= listaEditorialesEditada($fila["editorial"]);
+        $form .= "</div>";  
+        $form .= "<div>";
+        $form .= "<input type='submit' id='actualizar' name = 'actualizar_btn' value= 'Actualizar' />";    
+          // El usuario no ve en la interfaz formulario.
+          // Este se envia al controlador, para ejecutar la instruccion .
+          $form .= "<input type='hidden' id='transaccion' name = 'transaccion' value= 'actualizar' />";           
+          // NO se puede modificar el "id" del superheroe, es único es la llave.          
+          $form .= "<input type='hidden' id='idHeroe' name = 'idHeroe' value= '".$fila["id_heroe"]."' />";                 
+
+        $form .= "</div>";  
+        // Nuevo atributo "data-editar"
+      $form .= "</fieldset>";
+    $form .= "</form>";
+    $resultado->free();
+  }
+  else
+  {
+    // Muestro un mensaje de error.
+    $form = "<div class = 'error'>Error : No se ejecuto la consulta a la Base de Datos </div>";
+  }
+
+  $mysql->close();
+  
 
   // Separando el código de PHP y HTML, con formato utilizando "printf"  
   return printf($form);
@@ -143,7 +235,7 @@ Pasos para conectarse a una Base De Datos MySQL en PHP
               $tabla .= "<td><img src='img/".$fila["imagen"]."' /></td>";
               $tabla .= "<td><p>".$fila["descripcion"]."</p></td>";              
               $tabla .= "<td><h3>".$editorial[$fila["editorial"]]."</h3></td>";
-              $tabla .= "<td>Boton Editar</td>";
+              $tabla .= "<td><a href= '#' class = 'editar' data-id = '".$fila["id_heroe"]."'>Editar</a></td>";
               // no se coloca ID, porque como esta dentro del While no lo hace único.
               $tabla .= "<td><a href= '#' class = 'eliminar' data-id = '".$fila["id_heroe"]."'>Eliminar</a></td>";
               // Si se inspecciona el elemento, se mostrara con el "id_heroe" que le corresponde.
