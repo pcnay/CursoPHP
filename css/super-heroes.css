@@ -1,0 +1,121 @@
+ @import url("normalize.css");
+body,html
+{
+  background:#EEE;
+  font-family:Helvetica,Arial;
+  font-size:16px;
+  text-align:center;
+}
+img 
+{
+  max-width:80%;  
+}
+#cabecera,#contenido
+{
+  /* Compartan espacio cabecera y contenido */
+  display: inline-block;
+  width: 15%;
+  vertical-align: top;
+  
+}
+
+#cabecera, #contenido, #precarga, #respuesta, .tabla td, .tabla th
+{
+  padding: 1em;
+}
+
+#contenido
+{
+  background:white;
+  width: 80%;
+}
+
+#insertar 
+{
+  color:#292623;
+  font-size:1.5em;
+}
+
+#insertar:hover
+{
+  color:#EC673A;
+}
+
+#precarga, #respuesta
+{
+  display:none;
+}
+
+/* Se agrega una franja de color rojo para el <DIV> error. */
+.error, .exito
+{
+  background:red;
+  color:white;
+  padding: 1em;
+}
+
+.exito
+{
+  background:green;
+}
+
+.formulario, .tabla p
+{
+  text-align: left;
+}
+
+.formulario div
+{
+  margin: 1em auto;
+}
+
+.formulario legend
+{
+  font-size: 2em;
+  font-weight:bold;
+}
+
+.tabla
+{
+  margin:auto;
+  width:90%;
+}
+
+.tabla a 
+{
+  color: #EEE;  
+}
+
+.tabla a:hover
+{
+  color: #292623;
+}
+
+.tabla img 
+{
+  max-width: 200px;
+}
+
+/* Estilo de las celdas */ 
+
+.tabla td
+{
+  vertical-align:top;
+}
+.tabla th
+{
+  background: #292623;
+  color: #EEE;
+}
+
+/* Cambia de color cada renglon de la tabla donde se despliega la informacion */
+.tabla tr:nth-child(odd)
+{
+  background:#EC673A;
+}
+
+.tabla tr:nth-child(even)
+{
+  background: #1C5F81;
+}
+ 
