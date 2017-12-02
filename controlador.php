@@ -53,6 +53,13 @@
     else if ($transaccion = "actualizar")
     {
       // Modificar los reg. en el MySQL.
+      actualizarHeroe($_POST['idHeroe'],        
+        $_POST['nombre_txt'],
+        $_POST['imagen_txt'],
+        $_POST['descripcion_txa'],
+        $_POST['editorial_slc']
+      );
+
     }
   }
   ejecutarTransaccion($transaccion);

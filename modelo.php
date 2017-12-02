@@ -39,4 +39,24 @@
     return printf($respuesta);
   }
 
+  function actualizarHeroe($id_heroe,$nombre,$imagen,$descripcion,$editorial)
+  {
+    // Cuando es "0" mySQL automáticamente inserta en el último que lleva + 1
+    $sql = "UPDATE heroes SET nombre = '$nombre', imagen = '$imagen',descripcion = '$descripcion', editorial = $editorial WHERE id_heroe = $id_heroe";
+    
+    $mySQL = conexionMySQL();
+
+    if($resultado = $mySQL->query($sql))
+    {
+      $respuesta =  "<div class = 'exito' data-recargar>Se actualizo con éxito el registro del SuperHeroe : <b>$nombre</b></div>";
+    }
+    else
+    {
+      $respuesta =  "<div class = 'error' >Ocurrió un error NO se actualizo el reg. del superHeroe : <b>$nombre</b></div>";
+    }
+    $mySQL->close();
+    //$resultado->free();
+
+    return printf($respuesta);
+  }
 ?>

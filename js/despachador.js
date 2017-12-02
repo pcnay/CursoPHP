@@ -67,8 +67,16 @@ function enviarDatos()
       // Si no encuentra devuelve un -1
       if (ajax.responseText.indexOf("data-insertar")> -1)
       {
-        document.querySelector("#alta-heroe").addEventListener("submit",insertarHeroe);
+        document.querySelector("#alta-heroe").addEventListener("submit",insertarActualizarHeroe);
       }
+
+      // indexOf() = Evaluar si se encuentra la palabra, retorna un número.
+      // Si no encuentra devuelve un -1
+      if (ajax.responseText.indexOf("data-editar")> -1)
+      {
+        document.querySelector("#editar-heroe").addEventListener("submit",insertarActualizarHeroe);
+      }
+
 
       // Para recargar la página cuando se termina de insertar los datos.
       if (ajax.responseText.indexOf("data-recargar")> -1)
@@ -105,7 +113,7 @@ function ejecutarAJAX(dato)
   // Se ejecutan los 3 ultimas líneas para ejecutar la funcion "enviarDatos".
 }
 
-function insertarHeroe(evento)
+function insertarActualizarHeroe(evento)
 {
   // Previene que se ejecute por defecto el "submit" que es enviar los datos y desaparece 
   // el formulario.
